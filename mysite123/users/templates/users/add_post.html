@@ -1,0 +1,12 @@
+<!-- users/templates/users/add_post.html -->
+{% extends 'users/user_profile.html' %}
+
+
+{% block content %}
+  <h2>添加新文章</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">发布</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "element-plus": "^2.7.5",
+    "element-react": "^1.4.34",
+    "element-theme-default": "^1.4.13",
+    "vue": "^2.7.16"
+  }
+}

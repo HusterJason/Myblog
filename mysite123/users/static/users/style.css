@@ -1,0 +1,70 @@
+.post-actions {
+    display: flex;
+    align-items: center;
+}
+
+.post-actions span {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.icon-like {
+    margin-bottom: 1rem;
+    width: 24px;
+    height: 24px;
+    background-image: url("/static/users/images/like-icon.png");
+    background-size: contain;
+}
+
+
+.like-button[data-liked="true"] .icon-like {
+    background-image: url("/static/users/images/like-icon-active.png"); /* 点赞后的图标 */
+}
+
+.icon-comment {
+    margin-bottom: 1rem;
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+}
+
+.icon-view {
+    background-image: url("/static/users/images/view-icon.png"); /* 视图图标 */
+    margin-bottom: 1rem;
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+}
+
+.icon-comment {
+    background-image: url("/static/users/images/comment-icon.png"); /* 评论图标 */
+}
+
+.like-count, .view-count span, .comment-count span {
+    margin-left: 6px;
+    font-size: 14px;
+}
+
+
+.el-footer {
+    background-color: #f5f5f5; /* 背景颜色 */
+    padding: 20px 0;
+    border-top: 1px solid #eaeaea; /* 上边框 */
+}
+
+.ai-foot {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+}
+
+.el-row {
+    width: 90%; /* 容器宽度 */
+    margin: 0 auto; /* 自动边距 */
+}
+
+.el-col {
+    display: flex;
+    flex-direction: column;
+}

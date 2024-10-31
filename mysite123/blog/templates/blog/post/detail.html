@@ -1,0 +1,152 @@
+{% extends 'blog/base.html' %}
+{#本页是点文章进去后的文章详情以及评论页面#}
+{% load blog_tags %}
+{% block section %}
+<button id="like-button" data-id="{{ discussion.id }}">{{ discussion.likenum }} 点赞</button>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="box" style="background-color: #ffffffa8;">
+    <style>
+        .comment p {
+            margin-bottom: 20px; /* 每一行之间留有20px的空白 */
+        }
+
+  </style>
+    <!-- 文章详情 -->
+    <h1 class="is-size-5 has-text-weight-bold">{{ post.title }}</h1>
+    <div class="is-size-7 has-text-gray-light pt-1 pb-1" >
+        <span class="mr-3">作者：{{ post.owner }}</span>
+        <span>发布日期：{{ post.add_date }}</span>
+        <span>浏览量：{{ post.pv }}</span>
+    </div>
+    <div class="content" >
+        {{ post.content|safe }}
+    </div>
+</div>
+
+<div class="post-actions">
+    <!-- 其他文章操作（例如浏览量，评论数） -->
+
+    <!-- 点赞按钮 -->
+    <span class="like-button" data-liked="{{ post|has_liked:request.user }}">
+        {% if post|has_liked:request.user %}
+            <i class="icon-like"></i> <!-- 已点赞图标 -->
+        {% else %}
+            <i class="icon-like"></i> <!-- 未点赞图标 -->
+        {% endif %}
+        <span class="like-count">{{ post.likes }}</span> <!-- 显示点赞数 -->
+    </span>
+
+    <!-- 浏览量 -->
+    <span class="view-count">
+        <i class="icon-view"></i>
+        <span>{{ post.views_count }}</span>
+    </span>
+
+    <!-- 评论数 -->
+    <span class="comment-count">
+        <i class="icon-comment"></i>
+        <span>{{ comments.count }}</span>
+    </span>
+</div>
+
+<!-- 评论部分 -->
+<div class="box" style="background-color: #ffffffa8;">
+    {% with total_comments=comments.count %}
+        <h2>{{ total_comments }} 条评论</h2>
+    {% endwith %}
+
+    {% for comment in comments %}
+        <div class="comment">
+            <p class="info">
+               第 {{ forloop.counter }} 条评论 由 {{ comment.name }} 于 {{ comment.created|date:"Y-m-d H:i" }} 发布
+            </p>
+            <p>{{ comment.body|linebreaks }}</p>
+        </div>
+
+        <div class="post-actions">
+            <span class="like-button" data-liked="{{ post|has_liked:request.user }}">
+                <i class="icon-like"></i>
+                <span class="like-count">{{ post.likes }}</span>
+            </span>
+
+            <span class="view-count">
+                <i class="icon-view"></i>
+                <span>{{ post.views_count }}</span>
+            </span>
+
+            <span class="comment-count">
+                <i class="icon-comment"></i>
+                <span>{{ comments.count }}</span>
+            </span>
+        </div>
+
+    {% empty %}
+        <p>还没有任何评论</p>
+    {% endfor %}
+
+    {% if new_comment %}
+        <h2>您添加了一条评论</h2>
+    {% else %}
+        <p>新增一条评论</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <input type="submit" value="添加评论">
+        </form>
+    {% endif %}
+</div>
+
+
+
+
+{% for item in page %}
+<div>
+    用户名:{{ item.user.username }}
+    <a id="id{{ item.id }}">
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-like-fill"></use>
+        </svg>
+        <span id="nlikes">{{ item.likes }}</span>
+    </a>
+</div>
+
+{% if ln %}
+    {% for l in ln %}
+        {% if l.discussion == item %}
+            <script>
+                obj = document.getElementById('id{{ item.id }}');
+                obj.className = 'success';
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% endfor %}
+
+
+<script>
+$(document).ready(function() {
+    $('#like-button').click(function() {
+        var discussionId = $(this).data('id');
+        $.ajax({
+            url: '/discussion/' + discussionId + '/like/',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'liked') {
+                    $('#like-button').text(response.likenum + ' 取消点赞');
+                } else {
+                    $('#like-button').text(response.likenum + ' 点赞');
+                }
+            }
+        });
+    });
+});
+</script>
+
+
+
+{% endblock %}
+

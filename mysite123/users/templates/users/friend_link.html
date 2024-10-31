@@ -1,0 +1,57 @@
+{% extends 'users/user_profile.html' %}
+{% block title %}快速访问 {% endblock %}
+{% block content %}
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  {#.container {#}
+  {#  max-width: 1000px;#}
+  {#  margin: 20px auto;#}
+  {#  padding: 20px;#}
+  {#  background-color: #fff;#}
+  {#  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);}    #}
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    margin-bottom: 10px;
+  }
+  a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  a:hover {
+    background-color: #e9ecef;
+  }
+</style>
+
+<body>
+<!--<div class="container">-->
+  <h1>快速访问</h1>
+  <ul>
+    <li><a href="https://www.aibaobei.site/" target="_blank">AI宝贝</a></li>
+    <li><a href="https://www.csdn.net/?spm=1000.2115.3001.4476" target="_blank">CSDN</a></li>
+    <li><a href="https://www.programmercarl.com/" target="_blank">代码随想录</a></li>
+    <li><a href="https://leetcode.cn/" target="_blank">LeetCode</a></li>
+    <li><a href="https://www.youtube.com" target="_blank">YouTube</a></li>
+    <li><a href="https://user.qzone.qq.com/2197093825/infocenter" target="_blank">Jason的空间</a></li>
+  </ul>
+<!--    </div>-->
+    </body>
+{% endblock %}
